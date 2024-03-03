@@ -1,11 +1,12 @@
 from fastapi import FastAPI
-from inference import get_inference
+from inference import ChromaDB
 
 
 import uvicorn
 
 
 app = FastAPI()
+chroma_db = ChromaDB()
 
 @app.get("/")
 def read_root():
@@ -14,7 +15,7 @@ def read_root():
 
 @app.post('/predict')
 def read_item(query_str):
-    return get_inference(query_str)
+    return chroma_db.get_inference(query_str)
 
 
 if __name__ == '__main__':
