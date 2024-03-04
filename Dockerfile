@@ -8,4 +8,5 @@ RUN pipenv install
 
 ENTRYPOINT ["pipenv", "run"]
 
-CMD ["python", "src/api_service.py"]
+#CMD ["python", "src/api_service.py"]
+CMD ["streamlit", "run", "src/chatbot.py"]
