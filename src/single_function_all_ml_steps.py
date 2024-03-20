@@ -3,23 +3,37 @@ import threading
 import time
 
 
-def thread_function(name):
-    logging.info("Thread %s: starting", name)
+def load_data():
+    logging.info("Loading Data")
+    time.sleep(5)
+    logging.info("Data Loading Complete")
+
+
+def train_model():
+    logging.info("Train Model Start")
     time.sleep(2)
-    logging.info("Thread %s: finishing", name)
+    logging.info("Train Model Complete")
+    logging.info("Saving New Model Complete")
+
+
+def simulate_inference_request(query):
+    logging.info(f'Providing inference for {query}')
+    time.sleep(0.2)
+    logging.info(f'Provided inference for {query}')
 
 
 if __name__ == "__main__":
     format = "%(asctime)s: %(message)s"
-    logging.basicConfig(format=format, level=logging.INFO,
-                        datefmt="%H:%M:%S")
+    logging.basicConfig(format=format, level=logging.INFO, datefmt="%H:%M:%S")
 
-    logging.info("Main    : before creating thread")
-    x = threading.Thread(target=thread_function, args=(1,))
-    logging.info("Main    : before running thread")
+    logging.info("ML Model Deployed")
 
-    x.start()
+    load_data_thread = threading.Thread(target=load_data())
+    load_data_thread.start()
 
-    logging.info("Main    : wait for the thread to finish")
+    train_model_thread = threading.Thread(target=train_model)
+    train_model_thread.start()
 
-    logging.info("Main    : all done")
+    logging.info("Simulating Inference Requests")
+    simulate_inference_request_thread = threading.Thread(target=simulate_inference_request('xxx'))
+    simulate_inference_request_thread.start()
