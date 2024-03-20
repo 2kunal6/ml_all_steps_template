@@ -1,4 +1,5 @@
 import logging
+import random
 import threading
 import time
 
@@ -18,11 +19,27 @@ def train_model():
         logging.info("Saving New Model Complete")
 
 
-def simulate_inference_request(query):
+def get_inference(query):
+    logging.info(f'Providing inference for {query}')
+    time.sleep(0.2)
+    logging.info(f'Provided inference for {query}')
+
+def simulate_inference_request():
     while(True):
-        logging.info(f'Providing inference for {query}')
-        time.sleep(0.2)
-        logging.info(f'Provided inference for {query}')
+        get_inference(random.random())
+        time.sleep(2)
+
+
+def store_user_feedback(query_id, score):
+    logging.info(f'Storing score {query_id} = {score}')
+    time.sleep(0.2)
+    logging.info(f'Stored score for {query_id} = {score}')
+
+def listen_to_user_feedback():
+    while(True):
+        store_user_feedback(random.random(), random.random())
+        time.sleep(2)
+
 
 
 if __name__ == "__main__":
@@ -31,17 +48,14 @@ if __name__ == "__main__":
 
     logging.info("ML Model Deployed")
 
-    load_data_thread = threading.Thread(target=load_data, daemon = True)
+    load_data_thread = threading.Thread(target=load_data)
     load_data_thread.start()
 
-    logging.info("Start Training")
-
-    train_model_thread = threading.Thread(target=train_model, daemon = True)
+    train_model_thread = threading.Thread(target=train_model)
     train_model_thread.start()
 
-    logging.info("Simulating Inference Requests")
-    simulate_inference_request_thread = threading.Thread(target=simulate_inference_request('xxx'), daemon = True)
+    simulate_inference_request_thread = threading.Thread(target=simulate_inference_request)
     simulate_inference_request_thread.start()
 
-    while True:
-        pass
+    listen_to_user_feedback_thread = threading.Thread(target=listen_to_user_feedback)
+    listen_to_user_feedback_thread.start()
