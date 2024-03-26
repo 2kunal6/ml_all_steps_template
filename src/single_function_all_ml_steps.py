@@ -23,14 +23,14 @@ def train_model():
     global knn
     while(True):
         if(iris == None):
-            logging.info('Waiting for data to load')
+            logging.info('\tWaiting for data to load')
             time.sleep(3)
             continue
-        logging.info("Train Model Start")
+        logging.info("\tTrain Model Start")
         X, y = iris.data, iris.target
         knn = neighbors.KNeighborsClassifier(n_neighbors=1)
         knn.fit(X, y)
-        logging.info("Train Model Complete")
+        logging.info("\tTrain Model Complete")
         time.sleep(24)
 
 
@@ -38,12 +38,12 @@ def get_inference(query):
     global iris
     global knn
     if(knn == None):
-        logging.info('Waiting for model to load')
+        logging.info('\t\tWaiting for model to load')
         time.sleep(3)
         return
-    logging.info(f'Providing inference for {query}')
-    logging.info(iris.target_names[knn.predict(query)])
-    logging.info(f'Provided inference for {query}')
+    logging.info(f'\t\tProviding inference for {query}')
+    logging.info(f'\t\tInference Value: {iris.target_names[knn.predict(query)]}')
+    logging.info(f'\t\tProvided inference for {query}')
 
 def simulate_inference_request():
     while(True):
@@ -52,9 +52,9 @@ def simulate_inference_request():
 
 
 def store_user_feedback(query_id, score):
-    logging.info(f'Storing score {query_id} = {score}')
+    logging.info(f'\t\t\tStoring score {query_id} = {score}')
     time.sleep(0.2)
-    logging.info(f'Stored score for {query_id} = {score}')
+    logging.info(f'\t\t\tStored score for {query_id} = {score}')
 
 def listen_to_user_feedback():
     while(True):
