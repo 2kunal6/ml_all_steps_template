@@ -51,6 +51,12 @@ def simulate_inference_request():
         time.sleep(5)
 
 
+def continuously_check_inference_quality():
+    while(True):
+        logging.info("Checking inference quality")
+        time.sleep(5)
+
+
 def store_user_feedback(query_id, score):
     logging.info(f'\t\t\tStoring score {query_id} = {score}')
     time.sleep(0.2)
@@ -77,6 +83,9 @@ if __name__ == "__main__":
 
     simulate_inference_request_thread = threading.Thread(target=simulate_inference_request)
     simulate_inference_request_thread.start()
+
+    continuously_check_inference_quality_thread = threading.Thread(target=continuously_check_inference_quality)
+    continuously_check_inference_quality_thread.start()
 
     listen_to_user_feedback_thread = threading.Thread(target=listen_to_user_feedback)
     listen_to_user_feedback_thread.start()
