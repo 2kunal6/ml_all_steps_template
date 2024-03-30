@@ -8,11 +8,13 @@ import time
 
 logging.basicConfig(level = logging.INFO)
 
+
+data_file_path = 'data/iris.pkl'
+
 # TODO: Do this using cron
 while(True):
     logging.info("Loading Data")
     iris = datasets.load_iris()
-    data_file_path = 'data/iris.pkl'
 
     if os.path.exists(data_file_path):
         os.remove(data_file_path)
