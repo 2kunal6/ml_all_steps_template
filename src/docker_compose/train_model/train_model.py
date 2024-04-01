@@ -31,7 +31,8 @@ while(True):
     logging.info("\tSaving model as pickle file")
     if os.path.exists(model_file_path):
         os.remove(model_file_path)
-    pickle.dumps(knn, model_file_path)
+    knnPickle = open(model_file_path, 'wb')
+    pickle.dump(knn, knnPickle)
     logging.info("\tSaved model as pickle file")
 
 

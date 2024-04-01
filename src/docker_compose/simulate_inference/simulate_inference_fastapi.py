@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 
-import json
 import pickle
 import time
 import uvicorn
