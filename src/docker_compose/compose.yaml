@@ -12,13 +12,7 @@ services:
   simulate_inference:
     build:
       context: simulate_inference
-  listen_to_user_feedback:
-    build:
-      context: listen_to_user_feedback
     volumes:
       - ./data:/app/data
-  continuously_check_inference_quality:
-    build:
-      context: continuously_check_inference_quality
-    volumes:
-      - ./data:/app/data
+    ports:
+      - "8000:8000"
