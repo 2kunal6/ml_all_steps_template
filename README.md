@@ -12,3 +12,8 @@
 
 ### Prerequisites
 - **Docker:** Here are the installation instructions: https://github.com/2kunal6/util/blob/main/installations.txt
+
+
+kubernetes:
+- minikube ip
+- more robust: kubernetes cron, kafka, s3 to store data and models, vault
