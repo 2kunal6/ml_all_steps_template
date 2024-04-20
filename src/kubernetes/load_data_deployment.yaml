@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mas-load-data-deployment
+spec:
+  selector:
+    matchLabels:
+      app: mas-load-data
+  template:
+    metadata:
+      labels:
+        app: mas-load-data
+    spec:
+      volumes:
+        - name: data
+          hostPath:
+            path: /home/docker/
+      containers:
+        - image: 2kunal6/ml_load_data
+          name: mas-load-data
+          volumeMounts:
+            - name: data
+              mountPath: /app/data/

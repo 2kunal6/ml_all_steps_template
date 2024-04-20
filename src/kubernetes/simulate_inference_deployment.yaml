@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mas-simulate-inference-deployment
+spec:
+  selector:
+    matchLabels:
+      app: mas-simulate-inference
+  template:
+    metadata:
+      labels:
+        app: mas-simulate-inference
+    spec:
+      volumes:
+        - name: data
+          hostPath:
+            path: /home/docker/
+      containers:
+        - image: 2kunal6/ml_simulate_inference
+          name: mas-simulate-inference
+          volumeMounts:
+            - name: data
+              mountPath: /app/data/

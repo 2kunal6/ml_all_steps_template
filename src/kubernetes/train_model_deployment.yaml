@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mas-train-model-deployment
+spec:
+  selector:
+    matchLabels:
+      app: mas-train-model
+  template:
+    metadata:
+      labels:
+        app: mas-train-model
+    spec:
+      volumes:
+        - name: data
+          hostPath:
+            path: /home/docker/
+      containers:
+        - image: 2kunal6/ml_train_model
+          name: mas-train-model
+          volumeMounts:
+            - name: data
+              mountPath: /app/data/
