@@ -15,8 +15,8 @@ Kubernetes is one of the deployment options which runs the above steps as differ
 In this project, I tried to show a template implementation in the following increasing levels of difficulty, and with that increasing levels of quality and robustness of the app:
 1. Processes: A single python function with the above steps working in parallel as processes.
 2. Docker Compose: Above steps as different docker containers.
-3. Kubernetes kubectl: Above steps as different deployments and containers.
-4. Helm: Same as kubectl (i.e. different deployments and containers) but using a single command using helm packaging.
+3. Kubernetes using kubectl: Above steps as different deployments and containers.
+4. Helm: Same as kubectl but using a single command using helm packaging.
 
 
 ### Prerequisites
@@ -26,19 +26,37 @@ In this project, I tried to show a template implementation in the following incr
 
 ### Run commands
 1. src/single_function:
-    - 
-- sudo docker build -t foo . && sudo docker run -p 8000:8000 foo
-- Run this from the project root location where Dockerfile exists
+    - Go to the directory: src/single_function
+    - python3 -m pipenv shell
+    - python3 -m pip install pipenv
+    - python3 -m pipenv install
+    - python3 single_function_all_ml_steps.py
+      - This will parallely start the ML steps as processes.
+2. src/docker_compose
+    - Go to the directory src/docker_compose
+    - docker compose up
+      - This command will build and run the individual docker images which correspond to the ML steps.
+3. Kubernetes using kubectl:
+    - go to the directory src/helm_chart/templates
+    - kubectl apply -f load_data_deployment.yaml
+    - kubectl apply -f simulate_inference_deployment.yaml
+    - kubectl apply -f simulate_inference_service.yaml
+    - kubectl apply -f train_model_deployment.yaml
+    - The above commands create the Kubernetes resources that hosts the docker containers created above.  For now it is using the docker images from my [docker-hub-account](https://hub.docker.com/repositories/2kunal6), but we can change this to use the docker images from our local machine itself (i.e. minikube's local machine, not our host machine)
+4. Helm:
+   - go to the directory src/helm_chart
+   - helm install
+     - This command creates all the resources created by kubectl with this single command.
+
+Common comments for Kubectl and Helm:
+- This will expose the Fast API app which you can use through your browser with the url http://<minikube-ip>:8000/docs#/default
+      - This minikube ip can be found by running the command 'minikube ip' in your terminal
+- Login to minikube using 'minikube ssh' and there we can see the pkl files of the data and model being created.
+- kubectl logs <podname> will provide us with the logs, where we can confirm and debug the code execution.
+
 
 ### TODO
+- Include Terraform
+- Use Kubernetes CronJob instead of sleep
 - Expose this over internet
-
-
-
-kubernetes:
-- minikube ip
-- more robust: kubernetes cron, kafka, s3 to store data and models, vault
-- minikube ssh -> and check if the pkl files are created
-- Fast API homepage: http://0.0.0.0:8000/docs#/default
-- kubectl logs <podname>
-- docker images created from 'docker compose up'
+- Apart from the above ones there are many things we can do to make the app more robust like load balancing user queries, communication between containers using a queue, store data and models in cloud, vault etc.
