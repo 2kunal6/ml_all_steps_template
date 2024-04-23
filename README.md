@@ -6,11 +6,11 @@ ML applications are comprised of the following fundamental steps that work in sy
 
 These are just the fundamental steps and these could be further subdivided into many steps such as data wrangling, feature extraction, parameter fine-tuning etc.  There could be additional steps as well such as storing and analyzing user feedback, analyzing inference quality, result post-processing to filter out harmful content, and so on.
 
-Furthermore, the training step is not required for unsupervised apps and that can be replaced by a fine-tuning step which provides the best results.  For example, finding the best k in KNN or K-means clustering.
+Furthermore, the training step is not required for unsupervised apps and that can be replaced by a fine-tuning step which finetunes the parameters to provide the best results.  For example, finding the best k in the K-Nearest-Neighbour or K-means clustering.
 
 
 ### Deployment
-There are a large number of options when it comes to deploying, but Docker and Kubernetes have become very popular in this front, and large number of companies use these technologies for deployment.  Therefore we also use these technologies here.
+There are a large number of options when it comes to deploying, but Docker and Kubernetes have become very popular in this front, and large number of companies use these technologies.  Therefore we also use these technologies here.
 
 However, directly using Helm -- Kubernetes' package manager -- could be a bit confusing at first.  So, in this tutorial I have tried to show the app being deployed at increasing levels of difficulty, and with difficulty comes quality and robustness.  These are the 4 phases in which the app-deployment is introduced:
 1. Processes: A single python function with the above mentioned ML steps working in parallel as processes.
@@ -49,7 +49,7 @@ However, directly using Helm -- Kubernetes' package manager -- could be a bit co
      - This single command creates all the resources created by kubectl in the above step.
 
 Common comments for Kubectl and Helm:
-- This will expose the Fast API app which we can use through our browser with the url http://<minikube-ip>:8000/docs#/default
+- This will expose the Fast API app which we can use through our browser with the url http://minikube-ip:8000/docs#/default
       - This minikube ip can be found by running the command 'minikube ip' in our terminal
 - Login to minikube using 'minikube ssh' and there we can see the pkl files of the data and model being created.
 - kubectl logs <podname> will provide us with the logs, where we can confirm and debug the code execution.
@@ -59,4 +59,4 @@ Common comments for Kubectl and Helm:
 - Include Terraform
 - Use Kubernetes CronJob instead of sleep
 - Expose this over internet
-- Apart from the above ones there are many things we can do to make the app more robust like load balancing user queries, communication between containers using a queue, store data and models in cloud, vault etc.
+- Apart from the above ones there are many things we can do to make the app more robust like load balancing user queries, communication between containers using a queue, store data and models in cloud, vault and so on.
